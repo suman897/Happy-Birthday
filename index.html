@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #9d4edd;
+            --secondary: #c8b6ff;
+            --accent: #7b2cbf;
+            --love-red: #ff4d6d;
+            --bg-gradient: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 50%, #fce4ec 100%);
+            --text-main: #4a148c;
+            --text-sub: #6a1b9a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        .bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-emoji {
+            position: absolute;
+            user-select: none;
+            animation: float-up infinite linear;
+            opacity: 0.5;
+            filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.2));
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Container updated for mobile responsiveness */
+        .container {
+            position: relative;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            min-height: 400px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            padding: 2.5rem 1.5rem;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(157, 78, 221, 0.15);
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .step {
+            display: none;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .step.active {
+            display: block;
+            animation: slideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .heartbeat {
+            animation: heartbeat 0.8s ease-in-out;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.03); }
+            40% { transform: scale(0.98); }
+            60% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .big-emoji {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h2 { 
+            color: var(--accent); 
+            margin-top: 0; 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 2.5rem; 
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        p { 
+            line-height: 1.6; 
+            color: var(--text-sub); 
+            font-size: 1.1rem; 
+            white-space: pre-line;
+            margin: 0;
+            padding: 0 10px;
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        .cake-area {
+            position: relative;
+            height: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .candle-flame {
+            position: absolute;
+            top: 0;
+            font-size: 40px;
+            animation: flicker 0.6s infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes flicker {
+            from { opacity: 0.8; transform: scale(1) translateY(0); filter: drop-shadow(0 0 5px orange); }
+            to { opacity: 1; transform: scale(1.2) translateY(-8px); filter: drop-shadow(0 0 10px rgba(255, 165, 0, 0.8)); }
+        }
+
+        .confetti {
+            position: fixed;
+            z-index: 99;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            h2 { font-size: 2.2rem; }
+            p { font-size: 1rem; }
+            .big-emoji { font-size: 3.5rem; }
+            .container { padding: 2rem 1rem; width: 85%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-elements" id="bg-elements"></div>
+
+    <div class="container" id="main-card">
+        <div id="content-area" style="width: 100%;">
+            <div class="step active">
+                <span class="big-emoji">🎈</span>
+                <h2 id="greeting-title">Hey you ✨</h2>
+                <p>Tap anywhere… a little surprise is waiting 💕</p>
+                <div class="hint">(just tap)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Feature: Read name from URL parameter 'name'
+        const urlParams = new URLSearchParams(window.location.search);
+        let personName = urlParams.get('name') || "Special Someone";
+        
+        // Clean name (remove symbols etc)
+        personName = personName.charAt(0).toUpperCase() + personName.slice(1);
+
+        const steps = [
+            { type: 'text', emoji: '💫', title: `Hi ${personName} ✨`, text: 'Just tap… and let me tell you a little story. Our story 💕' },
+            { type: 'text', emoji: '🌙', title: 'Once upon a moment…', text: 'The world was doing its usual thing… until you walked into my life 🌙' },
+            { type: 'text', emoji: '🌸', title: 'And suddenly…', text: 'Ordinary days felt softer. Smiles came easier. Even silence felt warm — because it was with you 🌸' },
+            { type: 'text', emoji: '💖', title: 'You became my favorite place', text: 'In your laughter, I found comfort. In your eyes, I found home. Loving you became the easiest thing I’ve ever done 💖' },
+            { type: 'text', emoji: '🎂', title: 'Today is special…', text: 'Because today celebrates you — your kindness, your strength, your beautiful heart 🎂' },
+            { type: 'cake', title: 'Make a Wish', text: 'Before we celebrate, hold a wish in your heart and tap the flame to blow it out...' },
+            { type: 'final', emoji: '🎉', title: 'Happy Birthday my Love❤️', text: `Happy Birthday, ${personName}!\n\nThank you for being you, and for making life brighter just by being in it.\n\nI love you — today, tomorrow, always ✨` }
+        ];
+
+        let current = -1;
+        const card = document.getElementById('main-card');
+        const contentArea = document.getElementById('content-area');
+        let candleBlown = false;
+
+        window.onload = () => {
+            createBackground();
+            // Update initial screen if name is available
+            if(urlParams.get('name')) {
+               document.getElementById('greeting-title').innerText = `Hey ${personName} ✨`;
+            }
+        };
+
+        function createBackground() {
+            const bg = document.getElementById('bg-elements');
+            const emojis = ['💖','✨','🌸','💫','🦋','🌷','❤️'];
+            const count = window.innerWidth < 480 ? 20 : 35; // Fewer emojis on mobile for performance
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'bg-emoji';
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                el.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                el.style.animationDelay = `-${Math.random() * 15}s`;
+                bg.appendChild(el);
+            }
+        }
+
+        card.addEventListener('click', (e) => {
+            // Check if clicking flame on cake step
+            if (current >= 0 && steps[current].type === 'cake') {
+                const flame = document.getElementById('flame');
+                if (!candleBlown && (e.target === flame || flame.contains(e.target))) {
+                    blowOut();
+                    return;
+                }
+                // On mobile, let them tap anywhere on the card to blow it out for better UX
+                if(!candleBlown && window.innerWidth < 480) {
+                   blowOut();
+                   return;
+                }
+            }
+
+            if (current >= steps.length - 1) {
+                restart();
+                return;
+            }
+
+            card.classList.remove('heartbeat');
+            void card.offsetWidth; 
+            card.classList.add('heartbeat');
+
+            current++;
+            renderStep(current);
+        });
+
+        function renderStep(idx) {
+            const data = steps[idx];
+            
+            if (data.type === 'cake') {
+                candleBlown = false;
+                contentArea.innerHTML = `
+                    <div class="step active">
+                        <div class="cake-area">
+                            <div id="flame" class="candle-flame">🔥</div>
+                            <span style="font-size: 100px;">🎂</span>
+                        </div>
+                        <h2>${data.title}</h2>
+                        <p>${data.text}</p>
+                        <div class="hint">(tap the flame)</div>
+                    </div>
+                `;
+            } else {
+                contentArea.innerHTML = `
+                    <div class="step active">
+                        <span class="big-emoji">${data.emoji}</span>
+                        <h2>${data.title}</h2>
+                        <p>${data.text}</p>
+                        <div class="hint">${idx === steps.length - 1 ? '(tap to restart)' : '(tap to continue)'}</div>
+                    </div>
+                `;
+            }
+
+            if (data.type === 'final') {
+                triggerConfetti();
+            }
+        }
+
+        function blowOut() {
+            const flame = document.getElementById('flame');
+            if(!flame) return;
+            flame.innerHTML = '💨';
+            flame.style.animation = 'none';
+            candleBlown = true;
+            
+            setTimeout(() => {
+                flame.style.opacity = '0';
+                setTimeout(() => {
+                    current++;
+                    renderStep(current);
+                }, 600);
+            }, 600);
+        }
+
+        function triggerConfetti() {
+            const colors = ['#ff4d6d','#ffd166','#06d6a0','#4cc9f0','#c77dff', '#ff9e00', '#72efdd'];
+            const count = window.innerWidth < 480 ? 100 : 200; 
+            
+            for (let i = 0; i < count; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                
+                const isCircle = Math.random() > 0.5;
+                const size = Math.random() * 8 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                c.style.background = color;
+                c.style.width = size + 'px';
+                c.style.height = size + 'px';
+                c.style.borderRadius = isCircle ? '50%' : '2px';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.top = '-5vh';
+                
+                document.body.appendChild(c);
+
+                const drift = (Math.random() - 0.5) * (window.innerWidth < 480 ? 200 : 400);
+                const rotation = Math.random() * 1440 - 720;
+                const duration = 2500 + Math.random() * 3000;
+                const delay = Math.random() * 500;
+
+                c.animate([
+                    { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(${drift}px, 105vh) rotate(${rotation}deg)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    delay: delay,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    fill: 'forwards'
+                }).onfinish = () => c.remove();
+            }
+        }
+
+        function restart() {
+            current = -1;
+            candleBlown = false;
+            contentArea.innerHTML = `
+                <div class="step active">
+                    <span class="big-emoji">🎈</span>
+                    <h2 id="greeting-title">Hi ${personName} ✨</h2>
+                    <p>Tap anywhere… a little surprise is waiting 💕</p>
+                    <div class="hint">(just tap)</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
